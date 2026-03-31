@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenFood — Здоровое питание</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #1a4731;
+    --green-mid: #2d7a4f;
+    --green-bright: #3eb872;
+    --green-light: #d4f0e1;
+    --cream: #faf7f2;
+    --sand: #f0ebe0;
+    --text-dark: #1a2412;
+    --text-mid: #4a5a3a;
+    --text-light: #8a9a7a;
+    --white: #ffffff;
+    --red: #c0392b;
+    --red-light: #fdecea;
+    --gold: #c9a227;
+    --shadow: 0 4px 24px rgba(26,71,49,0.10);
+    --shadow-lg: 0 12px 48px rgba(26,71,49,0.16);
+    --radius: 16px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  /* ─── PAGE SYSTEM ─── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--green-deep);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--green-bright);
+    cursor: pointer;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--white); }
+
+  nav { display: flex; align-items: center; gap: 6px; }
+
+  nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 40px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+  nav a:hover, nav a.active { 
+    color: var(--white); 
+    background: rgba(255,255,255,0.12);
+  }
+
+  .nav-auth { display: flex; align-items: center; gap: 10px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 11px 28px;
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    text-decoration: none;
+  }
+  .btn-primary { background: var(--green-bright); color: var(--white); }
+  .btn-primary:hover { background: #35a565; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(62,184,114,0.35); }
+  .btn-outline { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.4); }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: var(--white); }
+  .btn-danger { background: var(--red); color: var(--white); }
+  .btn-danger:hover { background: #a93226; }
+  .btn-ghost { background: var(--sand); color: var(--text-dark); }
+  .btn-ghost:hover { background: #e5dfd4; }
+  .btn-sm { padding: 7px 18px; font-size: 0.82rem; }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 60%, #4aab71 100%);
+    padding: 100px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    color: var(--white);
+    padding: 6px 20px;
+    border-radius: 40px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.8rem;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .hero h1 em { color: var(--green-bright); font-style: normal; }
+  .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.8); margin-bottom: 40px; line-height: 1.6; }
+  .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ─── FEATURES ─── */
+  .features { padding: 80px 40px; max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--green-deep);
+    margin-bottom: 8px;
+  }
+  .section-sub { color: var(--text-light); margin-bottom: 48px; font-size: 1rem; }
+
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .feature-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 36px 28px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .feature-icon {
+    width: 56px; height: 56px;
+    background: var(--green-light);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+  .feature-card h3 { font-weight: 600; font-size: 1.05rem; margin-bottom: 8px; }
+  .feature-card p { color: var(--text-light); font-size: 0.9rem; line-height: 1.5; }
+
+  /* ─── MENU PAGE ─── */
+  .page-hero {
+    background: linear-gradient(120deg, var(--green-deep), var(--green-mid));
+    padding: 60px 40px;
+    text-align: center;
+  }
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .page-hero p { color: rgba(255,255,255,0.75); font-size: 1rem; }
+
+  .menu-container { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
+
+  .menu-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .menu-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+  .menu-card-img {
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    background: linear-gradient(135deg, var(--green-light), var(--sand));
+  }
+  .menu-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .menu-card-tag {
+    display: inline-block;
+    background: var(--green-light);
+    color: var(--green-mid);
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .menu-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+  .menu-card p { color: var(--text-light); font-size: 0.88rem; line-height: 1.5; flex: 1; }
+  .menu-card-footer { 
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 20px; padding-top: 16px;
+    border-top: 1px solid var(--sand);
+  }
+  .menu-card-kcal { font-size: 0.9rem; color: var(--text-mid); font-weight: 500; }
+  .menu-card-price { font-size: 1.2rem; font-weight: 700; color: var(--green-mid); }
+
+  /* ─── ABOUT PAGE ─── */
+  .about-container { max-width: 1000px; margin: 0 auto; padding: 60px 40px; }
+  .about-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 60px; }
+  .about-intro-text h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--green-deep); margin-bottom: 16px; }
+  .about-intro-text p { color: var(--text-mid); line-height: 1.8; margin-bottom: 12px; }
+  .about-visual {
+    background: linear-gradient(135deg, var(--green-light), var(--green-mid));
+    border-radius: var(--radius);
+    height: 300px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+  }
+  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .value-card { background: var(--white); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); border-left: 4px solid var(--green-bright); }
+  .value-card h3 { font-weight: 700; margin-bottom: 8px; color: var(--green-deep); }
+  .value-card p { color: var(--text-light); font-size: 0.9rem; line-height: 1.5; }
+
+  /* ─── AUTH MODAL ─── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(26,71,49,0.6);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 48px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    animation: modalIn 0.25s ease;
+  }
+  @keyframes modalIn { from { opacity:0; transform:translateY(20px); } }
+  .modal-close {
+    position: absolute; top: 20px; right: 20px;
+    background: var(--sand); border: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  }
+  .modal h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 6px; color: var(--green-deep); }
+  .modal-sub { color: var(--text-light); font-size: 0.9rem; margin-bottom: 32px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-mid); }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e0ddd6;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    background: var(--cream);
+    color: var(--text-dark);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--green-bright);
+    background: var(--white);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .modal .btn { width: 100%; margin-top: 8px; justify-content: center; padding: 14px; }
+  .modal-switch { text-align: center; margin-top: 20px; font-size: 0.88rem; color: var(--text-light); }
+  .modal-switch a { color: var(--green-mid); cursor: pointer; font-weight: 600; }
+  .alert { padding: 12px 16px; border-radius: var(--radius-sm); font-size: 0.88rem; margin-bottom: 16px; }
+  .alert-error { background: var(--red-light); color: var(--red); }
+  .alert-success { background: var(--green-light); color: var(--green-deep); }
+
+  /* ─── DASHBOARD ─── */
+  .dashboard-layout { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 70px); }
+  .sidebar {
+    background: var(--green-deep);
+    padding: 32px 20px;
+    position: sticky; top: 70px; height: calc(100vh - 70px);
+  }
+  .sidebar-user { text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .user-avatar {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--green-bright);
+    color: var(--white);
+    font-size: 1.8rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .sidebar-user h3 { color: var(--white); font-size: 1rem; font-weight: 600; }
+  .sidebar-user p { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+  .sidebar-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--white);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+
+  .sidebar-menu { list-style: none; }
+  .sidebar-menu li { margin-bottom: 4px; }
+  .sidebar-menu a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 16px;
+    border-radius: var(--radius-sm);
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .sidebar-menu a:hover, .sidebar-menu a.active {
+    background: rgba(255,255,255,0.12);
+    color: var(--white);
+  }
+  .sidebar-menu .icon { font-size: 1.1rem; width: 22px; }
+
+  .dashboard-main { padding: 40px; background: var(--sand); }
+  .dash-header { margin-bottom: 32px; }
+  .dash-header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--green-deep); }
+  .dash-header p { color: var(--text-light); margin-top: 4px; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px; }
+  .stat-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .stat-card .stat-label { font-size: 0.82rem; color: var(--text-light); font-weight: 500; margin-bottom: 8px; }
+  .stat-card .stat-value { font-size: 2rem; font-weight: 700; color: var(--green-deep); }
+  .stat-card .stat-sub { font-size: 0.82rem; color: var(--text-light); margin-top: 4px; }
+
+  .section-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+  }
+  .section-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .section-card-header h2 { font-size: 1.1rem; font-weight: 700; color: var(--green-deep); }
+
+  .order-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--sand);
+  }
+  .order-item:last-child { border-bottom: none; }
+  .order-info h4 { font-size: 0.95rem; font-weight: 600; }
+  .order-info p { font-size: 0.82rem; color: var(--text-light); }
+  .order-status {
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 600;
+  }
+  .status-active { background: var(--green-light); color: var(--green-mid); }
+  .status-done { background: var(--sand); color: var(--text-light); }
+  .status-pending { background: #fef9e7; color: #b7950b; }
+
+  /* ─── ADMIN PANEL ─── */
+  .admin-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 9px 20px;
+    border-radius: 40px;
+    border: 1.5px solid #e0ddd6;
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-mid);
+  }
+  .tab-btn.active { background: var(--green-mid); color: var(--white); border-color: var(--green-mid); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .data-table th {
+    text-align: left; padding: 12px 16px;
+    background: var(--sand);
+    color: var(--text-mid); font-weight: 600; font-size: 0.82rem;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .data-table th:first-child { border-radius: 8px 0 0 8px; }
+  .data-table th:last-child { border-radius: 0 8px 8px 0; }
+  .data-table td { padding: 14px 16px; border-bottom: 1px solid var(--sand); vertical-align: middle; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: #f8f6f1; }
+
+  .action-btns { display: flex; gap: 8px; }
+
+  /* ─── ADD FORM ─── */
+  .add-form { background: var(--cream); border-radius: var(--radius-sm); padding: 24px; margin-bottom: 24px; border: 1.5px dashed #ccc8be; }
+  .add-form h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 16px; color: var(--green-deep); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  /* ─── ORDERS ─── */
+  .orders-table { width: 100%; border-collapse: collapse; }
+
+  /* ─── PROFILE ─── */
+  .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--green-deep);
+    color: rgba(255,255,255,0.7);
+    padding: 40px;
+    margin-top: 0;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white); font-weight: 700; }
+  .footer-copy { font-size: 0.85rem; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    header { padding: 0 20px; }
+    .features-grid, .values-grid, .stats-grid, .profile-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2.5rem; }
+    .about-intro { grid-template-columns: 1fr; }
+    .dashboard-layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; height: auto; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* ─── UTILS ─── */
+  .hidden { display: none !important; }
+  .text-center { text-align: center; }
+  .mt-4 { margin-top: 16px; }
+  .mb-4 { margin-bottom: 16px; }
+  .gap-2 { gap: 8px; }
+  .flex { display: flex; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--green-light); border-radius: 3px; }
+
+  /* ─── NOTIFICATION ─── */
+  #notification {
+    position: fixed; bottom: 30px; right: 30px;
+    background: var(--green-deep);
+    color: var(--white);
+    padding: 14px 24px;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    z-index: 9999;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  #notification.show { transform: translateY(0); opacity: 1; }
+
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-light); }
+  .empty-state .empty-icon { font-size: 3rem; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header>
+  <div class="logo" onclick="showPage('home')">Green<span>Food</span></div>
+  <nav id="mainNav">
+    <a onclick="showPage('home')" id="nav-home" class="active">Главная</a>
+    <a onclick="showPage('menu')" id="nav-menu">Меню</a>
+    <a onclick="showPage('about')" id="nav-about">О компании</a>
+    <a onclick="showPage('orders')" id="nav-orders" class="hidden">Мои заказы</a>
+    <a onclick="showPage('dashboard')" id="nav-dash" class="hidden">Кабинет</a>
+    <a onclick="showPage('admin')" id="nav-admin" class="hidden" style="color: var(--gold);">⚡ Админ</a>
+  </nav>
+  <div class="nav-auth">
+    <div id="authButtons">
+      <button class="btn btn-outline btn-sm" onclick="openModal('login')">Войти</button>
+      <button class="btn btn-primary btn-sm" onclick="openModal('register')" style="margin-left:8px">Регистрация</button>
+    </div>
+    <div id="userMenu" class="hidden flex items-center gap-2">
+      <span id="headerUserName" style="color:rgba(255,255,255,0.8);font-size:0.88rem;"></span>
+      <button class="btn btn-outline btn-sm" onclick="logout()">Выйти</button>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════ PAGES ══════════════════ -->
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🥗 Доставка здорового питания</div>
+      <h1>Здоровое питание — это <em>просто</em></h1>
+      <p>Сбалансированные рационы с подсчётом калорий. Свежие ингредиенты, готовые блюда каждый день.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" style="font-size:1rem;padding:14px 36px;" onclick="showPage('menu')">Смотреть меню</button>
+        <button class="btn btn-outline" style="font-size:1rem;padding:14px 36px;" onclick="openModal('register')">Начать сейчас</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="text-center" style="max-width:500px;margin:0 auto 48px;">
+      <div class="section-title">Почему выбирают нас</div>
+      <p class="section-sub">Мы делаем здоровое питание удобным и доступным</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌿</div>
+        <h3>Свежие продукты</h3>
+        <p>Только натуральные ингредиенты без консервантов и добавок</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Быстрая доставка</h3>
+        <p>Доставим в течение 2 часов по всему городу</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧮</div>
+        <h3>Подсчёт калорий</h3>
+        <p>Каждый рацион рассчитан нашими нутрициологами</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">GreenFood</div>
+      <div class="footer-copy">© 2025 GreenFood. Все права защищены.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- MENU -->
+<div id="page-menu" class="page">
+  <div class="page-hero">
+    <h1>Наше меню</h1>
+    <p>Выберите подходящий рацион для ваших целей</p>
+  </div>
+  <div class="menu-container">
+    <div id="menuGrid" class="menu-grid"></div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">GreenFood</div>
+      <div class="footer-copy">© 2025 GreenFood</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ABOUT -->
+<div id="page-about" class="page">
+  <div class="page-hero">
+    <h1>О компании</h1>
+    <p>Наша миссия — сделать здоровое питание доступным каждому</p>
+  </div>
+  <div class="about-container">
+    <div class="about-intro">
+      <div class="about-intro-text">
+        <h2>GreenFood — больше чем доставка еды</h2>
+        <p>Мы верим, что правильное питание не должно быть скучным или сложным. С 2020 года мы помогаем людям питаться осознанно и вкусно.</p>
+        <p>Наши нутрициологи разрабатывают сбалансированные рационы, учитывая ваши цели, вкусовые предпочтения и образ жизни.</p>
+        <button class="btn btn-primary mt-4" onclick="openModal('register')">Попробовать</button>
+      </div>
+      <div class="about-visual">🌱</div>
+    </div>
+    <div class="section-title">Наши ценности</div>
+    <p class="section-sub">Принципы, которые лежат в основе нашей работы</p>
+    <div class="values-grid">
+      <div class="value-card">
+        <h3>🎯 Миссия</h3>
+        <p>Сделать здоровое питание доступным для каждого человека, вне зависимости от образа жизни.</p>
+      </div>
+      <div class="value-card">
+        <h3>✨ Качество</h3>
+        <p>Используем только свежие продукты от проверенных поставщиков. Никаких консервантов.</p>
+      </div>
+      <div class="value-card">
+        <h3>💚 Забота</h3>
+        <p>Индивидуальный подход к каждому клиенту. Ваши цели — наш приоритет.</p>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">GreenFood</div>
+      <div class="footer-copy">© 2025 GreenFood</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ORDERS (authorized) -->
+<div id="page-orders" class="page">
+  <div class="page-hero">
+    <h1>Мои заказы</h1>
+    <p>История и текущие заказы</p>
+  </div>
+  <div style="max-width:900px;margin:0 auto;padding:40px;">
+    <div id="userOrdersList"></div>
+  </div>
+  <footer><div class="footer-inner"><div class="footer-logo">GreenFood</div><div class="footer-copy">© 2025 GreenFood</div></div></footer>
+</div>
+
+<!-- DASHBOARD (authorized) -->
+<div id="page-dashboard" class="page">
+  <div class="dashboard-layout">
+    <div class="sidebar">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarAvatar">U</div>
+        <h3 id="sidebarName">Пользователь</h3>
+        <p id="sidebarEmail">email@mail.ru</p>
+        <div class="sidebar-badge" id="sidebarRole">Клиент</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a onclick="switchDashTab('profile')" id="dtab-profile" class="active"><span class="icon">👤</span>Профиль</a></li>
+        <li><a onclick="switchDashTab('myorders')" id="dtab-myorders"><span class="icon">📦</span>Мои заказы</a></li>
+        <li><a onclick="switchDashTab('subscription')" id="dtab-subscription"><span class="icon">⭐</span>Подписка</a></li>
+        <li style="margin-top:20px;"><a onclick="logout()" style="color:rgba(255,100,100,0.8)"><span class="icon">🚪</span>Выйти</a></li>
+      </ul>
+    </div>
+    <div class="dashboard-main">
+      <!-- Profile Tab -->
+      <div id="dtab-profile-content" class="tab-content active">
+        <div class="dash-header">
+          <h1 id="dashWelcome">Добро пожаловать!</h1>
+          <p>Управляйте своим профилем и заказами</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Всего заказов</div>
+            <div class="stat-value" id="statOrders">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Активная подписка</div>
+            <div class="stat-value" id="statSub">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Сохранено калорий</div>
+            <div class="stat-value">🥗</div>
+            <div class="stat-sub">Отслеживайте прогресс</div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-header"><h2>Данные профиля</h2></div>
+          <div class="profile-grid">
+            <div class="form-group">
+              <label>Имя</label>
+              <input type="text" id="profileName" placeholder="Ваше имя">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" id="profileEmail" disabled style="opacity:0.6">
+            </div>
+            <div class="form-group">
+              <label>Телефон</label>
+              <input type="text" id="profilePhone" placeholder="+7 (999) 123-45-67">
+            </div>
+            <div class="form-group">
+              <label>Адрес доставки</label>
+              <input type="text" id="profileAddress" placeholder="Улица, дом, квартира">
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm mt-4" onclick="saveProfile()">Сохранить изменения</button>
+        </div>
+      </div>
+
+      <!-- My Orders Tab -->
+      <div id="dtab-myorders-content" class="tab-content">
+        <div class="dash-header"><h1>Мои заказы</h1><p>История заказов</p></div>
+        <div class="section-card">
+          <div id="dashOrdersList"></div>
+        </div>
+      </div>
+
+      <!-- Subscription Tab -->
+      <div id="dtab-subscription-content" class="tab-content">
+        <div class="dash-header"><h1>Подписка</h1><p>Управляйте своим рационом</p></div>
+        <div class="section-card">
+          <div class="section-card-header"><h2>Текущий рацион</h2></div>
+          <div id="currentSubInfo" style="margin-bottom:24px;color:var(--text-light);">Нет активной подписки</div>
+          <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:16px;color:var(--green-deep);">Выбрать рацион из меню:</h3>
+          <div id="subMenuList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="page-admin" class="page">
+  <div class="page-hero">
+    <h1>⚡ Панель администратора</h1>
+    <p>Управление контентом сайта</p>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:40px;">
+    <div class="admin-tabs">
+      <button class="tab-btn active" onclick="switchAdminTab('menu')">🥗 Меню</button>
+      <button class="tab-btn" onclick="switchAdminTab('users')">👥 Пользователи</button>
+      <button class="tab-btn" onclick="switchAdminTab('orders')">📦 Заказы</button>
+    </div>
+
+    <!-- Menu Tab -->
+    <div id="admin-menu" class="tab-content active">
+      <div class="section-card">
+        <div class="add-form">
+          <h3>➕ Добавить позицию в меню</h3>
+          <div class="form-row">
+            <div class="form-group"><label>Название</label><input type="text" id="newMenuName" placeholder="Фитнес-рацион"></div>
+            <div class="form-group"><label>Калории</label><input type="text" id="newMenuKcal" placeholder="1200–1500 ккал"></div>
+            <div class="form-group"><label>Цена (₽/день)</label><input type="number" id="newMenuPrice" placeholder="490"></div>
+            <div class="form-group"><label>Категория</label>
+              <select id="newMenuCat">
+                <option>Похудение</option><option>Баланс</option><option>Набор массы</option>
+                <option>Вегетарианское</option><option>Детокс</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label>Описание</label><textarea id="newMenuDesc" placeholder="Краткое описание рациона..."></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label>Эмодзи (иконка)</label><input type="text" id="newMenuEmoji" placeholder="🥗" maxlength="4"></div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addMenuItem()">Добавить в меню</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Иконка</th><th>Название</th><th>Калории</th><th>Цена</th><th>Категория</th><th>Действия</th></tr>
+          </thead>
+          <tbody id="adminMenuTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Users Tab -->
+    <div id="admin-users" class="tab-content">
+      <div class="section-card">
+        <table class="data-table">
+          <thead>
+            <tr><th>ID</th><th>Имя</th><th>Email</th><th>Роль</th><th>Заказов</th><th>Действия</th></tr>
+          </thead>
+          <tbody id="adminUsersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Orders Tab -->
+    <div id="admin-orders" class="tab-content">
+      <div class="section-card">
+        <table class="data-table">
+          <thead>
+            <tr><th>Дата</th><th>Пользователь</th><th>Рацион</th><th>Статус</th><th>Сумма</th></tr>
+          </thead>
+          <tbody id="adminOrdersTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <footer><div class="footer-inner"><div class="footer-logo">GreenFood</div><div class="footer-copy">© 2025 GreenFood</div></div></footer>
+</div>
+
+<!-- ══════════════════ AUTH MODALS ══════════════════ -->
+<div id="modalOverlay" class="modal-overlay" onclick="closeModalOutside(event)">
+  <!-- LOGIN -->
+  <div id="loginModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>Добро пожаловать</h2>
+    <p class="modal-sub">Войдите в свой аккаунт GreenFood</p>
+    <div id="loginAlert" class="alert alert-error hidden"></div>
+    <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="email@mail.ru"></div>
+    <div class="form-group"><label>Пароль</label><input type="password" id="loginPass" placeholder="••••••••"></div>
+    <button class="btn btn-primary" onclick="login()">Войти</button>
+    <div class="modal-switch">Нет аккаунта? <a onclick="openModal('register')">Зарегистрироваться</a></div>
+  </div>
+  <!-- REGISTER -->
+  <div id="registerModal" class="modal hidden">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>Создать аккаунт</h2>
+    <p class="modal-sub">Присоединяйтесь к GreenFood</p>
+    <div id="regAlert" class="alert alert-error hidden"></div>
+    <div class="form-group"><label>Имя</label><input type="text" id="regName" placeholder="Иван Иванов"></div>
+    <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="email@mail.ru"></div>
+    <div class="form-group"><label>Пароль</label><input type="password" id="regPass" placeholder="Минимум 6 символов"></div>
+    <div class="form-group"><label>Повторите пароль</label><input type="password" id="regPass2" placeholder="••••••••"></div>
+    <button class="btn btn-primary" onclick="register()">Зарегистрироваться</button>
+    <div class="modal-switch">Уже есть аккаунт? <a onclick="openModal('login')">Войти</a></div>
+  </div>
+</div>
+
+<!-- Notification -->
+<div id="notification"></div>
+
+<!-- ══════════════════ JS ══════════════════ -->
+<script>
+// ─── STATE ───
+let currentUser = null;
+let DB = {
+  users: [],
+  menu: [],
+  orders: []
+};
+
+// ─── INIT ───
+function init() {
+  loadDB();
+  if (!DB.users.find(u => u.role === 'admin')) {
+    DB.users.push({
+      id: 'admin-1',
+      name: 'Администратор',
+      email: 'admin@greenfood.ru',
+      password: 'admin123',
+      role: 'admin',
+      phone: '',
+      address: ''
+    });
+  }
+  if (DB.menu.length === 0) {
+    DB.menu = [
+      { id: mid(), name: 'Фитнес-рацион', kcal: '1200–1500 ккал', price: 490, category: 'Похудение', desc: 'Идеально для снижения веса. Лёгкие блюда с высоким содержанием белка.', emoji: '🏃' },
+      { id: mid(), name: 'Баланс', kcal: '1800 ккал', price: 590, category: 'Баланс', desc: 'Сбалансированное питание для поддержания формы и хорошего самочувствия.', emoji: '⚖️' },
+      { id: mid(), name: 'Вегетарианский', kcal: '1600 ккал', price: 550, category: 'Вегетарианское', desc: 'Полноценный растительный рацион без мяса и рыбы.', emoji: '🥦' },
+      { id: mid(), name: 'Детокс', kcal: '1000–1200 ккал', price: 620, category: 'Детокс', desc: 'Очищение организма с лёгкими блюдами и зелёными смузи.', emoji: '🍵' },
+    ];
+  }
+  saveDB();
+
+  const savedUser = sessionStorage.getItem('gf_user');
+  if (savedUser) {
+    currentUser = JSON.parse(savedUser);
+    updateUI();
+  }
+  renderMenuPage();
+}
+
+function mid() { return Math.random().toString(36).substr(2,9); }
+
+// ─── DB ───
+function loadDB() {
+  const d = localStorage.getItem('gf_db');
+  if (d) DB = JSON.parse(d);
+}
+function saveDB() { localStorage.setItem('gf_db', JSON.stringify(DB)); }
+
+// ─── AUTH ───
+function login() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const user = DB.users.find(u => u.email === email && u.password === pass);
+  if (!user) { showAlert('loginAlert', 'Неверный email или пароль'); return; }
+  currentUser = user;
+  sessionStorage.setItem('gf_user', JSON.stringify(user));
+  closeModal();
+  updateUI();
+  showNotification('Добро пожаловать, ' + user.name + '!');
+  showPage(user.role === 'admin' ? 'admin' : 'dashboard');
+}
+
+function register() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+  const pass2 = document.getElementById('regPass2').value;
+
+  if (!name || !email || !pass) { showAlert('regAlert', 'Заполните все поля'); return; }
+  if (pass.length < 6) { showAlert('regAlert', 'Пароль минимум 6 символов'); return; }
+  if (pass !== pass2) { showAlert('regAlert', 'Пароли не совпадают'); return; }
+  if (DB.users.find(u => u.email === email)) { showAlert('regAlert', 'Email уже зарегистрирован'); return; }
+
+  const user = { id: mid(), name, email, password: pass, role: 'user', phone: '', address: '', subscription: null };
+  DB.users.push(user);
+  saveDB();
+  currentUser = user;
+  sessionStorage.setItem('gf_user', JSON.stringify(user));
+  closeModal();
+  updateUI();
+  showNotification('Регистрация успешна! Добро пожаловать!');
+  showPage('dashboard');
+}
+
+function logout() {
+  currentUser = null;
+  sessionStorage.removeItem('gf_user');
+  updateUI();
+  showPage('home');
+  showNotification('Вы вышли из аккаунта');
+}
+
+function updateUI() {
+  const isAuth = !!currentUser;
+  const isAdmin = isAuth && currentUser.role === 'admin';
+  document.getElementById('authButtons').classList.toggle('hidden', isAuth);
+  document.getElementById('userMenu').classList.toggle('hidden', !isAuth);
+  document.getElementById('nav-orders').classList.toggle('hidden', !isAuth || isAdmin);
+  document.getElementById('nav-dash').classList.toggle('hidden', !isAuth || isAdmin);
+  document.getElementById('nav-admin').classList.toggle('hidden', !isAdmin);
+  if (isAuth) {
+    document.getElementById('headerUserName').textContent = currentUser.name;
+    updateDashboard();
+    renderMenuPage();
+  }
+}
+
+// ─── PAGES ───
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+  if (name === 'menu') renderMenuPage();
+  if (name === 'dashboard') { updateDashboard(); switchDashTab('profile'); }
+  if (name === 'admin') renderAdmin();
+  if (name === 'orders') renderUserOrders();
+}
+
+// ─── MENU ───
+function renderMenuPage() {
+  const grid = document.getElementById('menuGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  if (DB.menu.length === 0) {
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🌿</div><p>Меню пока пусто</p></div>';
+    return;
+  }
+  DB.menu.forEach(item => {
+    const canOrder = !!currentUser && currentUser.role !== 'admin';
+    grid.innerHTML += `
+      <div class="menu-card">
+        <div class="menu-card-img">${item.emoji || '🥗'}</div>
+        <div class="menu-card-body">
+          <span class="menu-card-tag">${item.category}</span>
+          <h3>${item.name}</h3>
+          <p>${item.desc}</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-kcal">🔥 ${item.kcal}</span>
+            <span class="menu-card-price">${item.price} ₽/день</span>
+          </div>
+          ${canOrder ? `<button class="btn btn-primary btn-sm" style="width:100%;margin-top:16px" onclick="orderItem('${item.id}')">Заказать</button>` : ''}
+          ${!currentUser ? `<button class="btn btn-ghost btn-sm" style="width:100%;margin-top:16px" onclick="openModal('register')">Войдите чтобы заказать</button>` : ''}
+        </div>
+      </div>`;
+  });
+}
+
+function orderItem(menuId) {
+  if (!currentUser) { openModal('login'); return; }
+  const item = DB.menu.find(m => m.id === menuId);
+  if (!item) return;
+  const order = {
+    id: mid(),
+    userId: currentUser.id,
+    userName: currentUser.name,
+    menuId: item.id,
+    menuName: item.name,
+    price: item.price,
+    status: 'active',
+    date: new Date().toLocaleDateString('ru-RU')
+  };
+  DB.orders.push(order);
+  // update user subscription
+  const userIdx = DB.users.findIndex(u => u.id === currentUser.id);
+  if (userIdx !== -1) DB.users[userIdx].subscription = item.name;
+  currentUser.subscription = item.name;
+  sessionStorage.setItem('gf_user', JSON.stringify(currentUser));
+  saveDB();
+  showNotification(`✅ Рацион «${item.name}» заказан!`);
+  updateDashboard();
+}
+
+// ─── DASHBOARD ───
+function updateDashboard() {
+  if (!currentUser) return;
+  const u = DB.users.find(x => x.id === currentUser.id) || currentUser;
+  document.getElementById('sidebarAvatar').textContent = u.name[0].toUpperCase();
+  document.getElementById('sidebarName').textContent = u.name;
+  document.getElementById('sidebarEmail').textContent = u.email;
+  document.getElementById('sidebarRole').textContent = u.role === 'admin' ? '⚡ Администратор' : '🥗 Клиент';
+  document.getElementById('dashWelcome').textContent = 'Привет, ' + u.name + '!';
+  document.getElementById('profileName').value = u.name;
+  document.getElementById('profileEmail').value = u.email;
+  document.getElementById('profilePhone').value = u.phone || '';
+  document.getElementById('profileAddress').value = u.address || '';
+  const userOrders = DB.orders.filter(o => o.userId === u.id);
+  document.getElementById('statOrders').textContent = userOrders.length;
+  document.getElementById('statSub').textContent = u.subscription || '—';
+  renderDashOrders(userOrders);
+  renderSubMenu();
+}
+
+function renderDashOrders(orders) {
+  const el = document.getElementById('dashOrdersList');
+  if (!orders || orders.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📦</div><p>Заказов пока нет</p></div>';
+    return;
+  }
+  el.innerHTML = orders.map(o => `
+    <div class="order-item">
+      <div class="order-info">
+        <h4>${o.menuName}</h4>
+        <p>${o.date}</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <span style="font-weight:700;color:var(--green-mid)">${o.price} ₽/день</span>
+        <span class="order-status ${o.status === 'active' ? 'status-active' : 'status-done'}">${o.status === 'active' ? '✅ Активный' : '✔ Завершён'}</span>
+      </div>
+    </div>`).join('');
+}
+
+function renderSubMenu() {
+  const el = document.getElementById('subMenuList');
+  if (!el) return;
+  el.innerHTML = DB.menu.map(m => `
+    <div style="background:var(--cream);border-radius:12px;padding:16px;border:1.5px solid #e0ddd6;">
+      <div style="font-size:2rem;margin-bottom:8px">${m.emoji}</div>
+      <div style="font-weight:700;margin-bottom:4px">${m.name}</div>
+      <div style="font-size:0.82rem;color:var(--text-light);margin-bottom:12px">${m.kcal} · ${m.price} ₽/день</div>
+      <button class="btn btn-primary btn-sm" style="width:100%" onclick="orderItem('${m.id}')">Подключить</button>
+    </div>`).join('');
+  const sub = currentUser && currentUser.subscription;
+  const infoEl = document.getElementById('currentSubInfo');
+  if (infoEl) infoEl.innerHTML = sub 
+    ? `<div style="background:var(--green-light);padding:14px 18px;border-radius:10px;color:var(--green-deep);font-weight:600">✅ Текущий рацион: <strong>${sub}</strong></div>`
+    : '<p>Нет активной подписки. Выберите рацион:</p>';
+}
+
+function switchDashTab(tab) {
+  document.querySelectorAll('[id^="dtab-"][id$="-content"]').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('[id^="dtab-"]:not([id$="-content"])').forEach(el => el.classList.remove('active'));
+  document.getElementById('dtab-' + tab + '-content').classList.add('active');
+  document.getElementById('dtab-' + tab).classList.add('active');
+}
+
+function saveProfile() {
+  const idx = DB.users.findIndex(u => u.id === currentUser.id);
+  if (idx === -1) return;
+  DB.users[idx].name = document.getElementById('profileName').value.trim() || DB.users[idx].name;
+  DB.users[idx].phone = document.getElementById('profilePhone').value.trim();
+  DB.users[idx].address = document.getElementById('profileAddress').value.trim();
+  currentUser = { ...currentUser, ...DB.users[idx] };
+  sessionStorage.setItem('gf_user', JSON.stringify(currentUser));
+  saveDB();
+  updateDashboard();
+  showNotification('Профиль сохранён!');
+}
+
+// ─── USER ORDERS PAGE ───
+function renderUserOrders() {
+  if (!currentUser) return;
+  const orders = DB.orders.filter(o => o.userId === currentUser.id);
+  const el = document.getElementById('userOrdersList');
+  if (orders.length === 0) {
+    el.innerHTML = `<div class="section-card empty-state"><div class="empty-icon">📦</div><p>У вас пока нет заказов</p><button class="btn btn-primary mt-4" onclick="showPage('menu')">Выбрать рацион</button></div>`;
+    return;
+  }
+  el.innerHTML = `<div class="section-card">${orders.map(o => `
+    <div class="order-item">
+      <div class="order-info"><h4>${o.menuName}</h4><p>${o.date}</p></div>
+      <div style="display:flex;gap:16px;align-items:center">
+        <span style="font-weight:700;color:var(--green-mid)">${o.price} ₽/день</span>
+        <span class="order-status ${o.status==='active'?'status-active':'status-done'}">${o.status==='active'?'✅ Активный':'✔ Завершён'}</span>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+// ─── ADMIN ───
+function renderAdmin() {
+  renderAdminMenu();
+  renderAdminUsers();
+  renderAdminOrders();
+}
+
+function switchAdminTab(tab) {
+  document.querySelectorAll('[id^="admin-"]').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('admin-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function renderAdminMenu() {
+  const tbody = document.getElementById('adminMenuTable');
+  if (!tbody) return;
+  tbody.innerHTML = DB.menu.length === 0
+    ? '<tr><td colspan="6" style="text-align:center;color:var(--text-light);padding:40px">Меню пусто</td></tr>'
+    : DB.menu.map(m => `
+      <tr>
+        <td style="font-size:1.5rem">${m.emoji}</td>
+        <td><strong>${m.name}</strong></td>
+        <td>${m.kcal}</td>
+        <td>${m.price} ₽</td>
+        <td><span class="menu-card-tag">${m.category}</span></td>
+        <td><div class="action-btns">
+          <button class="btn btn-danger btn-sm" onclick="deleteMenuItem('${m.id}')">Удалить</button>
+        </div></td>
+      </tr>`).join('');
+}
+
+function addMenuItem() {
+  const name = document.getElementById('newMenuName').value.trim();
+  const kcal = document.getElementById('newMenuKcal').value.trim();
+  const price = parseInt(document.getElementById('newMenuPrice').value) || 0;
+  const category = document.getElementById('newMenuCat').value;
+  const desc = document.getElementById('newMenuDesc').value.trim();
+  const emoji = document.getElementById('newMenuEmoji').value.trim() || '🥗';
+  if (!name || !kcal || !price) { showNotification('❌ Заполните обязательные поля'); return; }
+  DB.menu.push({ id: mid(), name, kcal, price, category, desc, emoji });
+  saveDB();
+  document.getElementById('newMenuName').value = '';
+  document.getElementById('newMenuKcal').value = '';
+  document.getElementById('newMenuPrice').value = '';
+  document.getElementById('newMenuDesc').value = '';
+  document.getElementById('newMenuEmoji').value = '';
+  renderAdminMenu();
+  renderMenuPage();
+  showNotification('✅ Позиция добавлена в меню');
+}
+
+function deleteMenuItem(id) {
+  if (!confirm('Удалить позицию из меню?')) return;
+  DB.menu = DB.menu.filter(m => m.id !== id);
+  saveDB();
+  renderAdminMenu();
+  renderMenuPage();
+  showNotification('🗑 Позиция удалена');
+}
+
+function renderAdminUsers() {
+  const tbody = document.getElementById('adminUsersTable');
+  if (!tbody) return;
+  tbody.innerHTML = DB.users.map((u, i) => `
+    <tr>
+      <td style="color:var(--text-light);font-size:0.8rem">${i + 1}</td>
+      <td><strong>${u.name}</strong></td>
+      <td>${u.email}</td>
+      <td><span class="menu-card-tag" style="${u.role==='admin'?'background:#fff3cd;color:#856404':''}">
+        ${u.role === 'admin' ? '⚡ Администратор' : '🥗 Клиент'}
+      </span></td>
+      <td>${DB.orders.filter(o => o.userId === u.id).length}</td>
+      <td><div class="action-btns">
+        ${u.role !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="deleteUser('${u.id}')">Удалить</button>` : '<span style="color:var(--text-light);font-size:0.8rem">Нельзя</span>'}
+      </div></td>
+    </tr>`).join('');
+}
+
+function deleteUser(id) {
+  if (!confirm('Удалить пользователя?')) return;
+  DB.users = DB.users.filter(u => u.id !== id);
+  DB.orders = DB.orders.filter(o => o.userId !== id);
+  saveDB();
+  renderAdminUsers();
+  renderAdminOrders();
+  showNotification('🗑 Пользователь удалён');
+}
+
+function renderAdminOrders() {
+  const tbody = document.getElementById('adminOrdersTable');
+  if (!tbody) return;
+  tbody.innerHTML = DB.orders.length === 0
+    ? '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:40px">Заказов нет</td></tr>'
+    : [...DB.orders].reverse().map(o => `
+      <tr>
+        <td>${o.date}</td>
+        <td>${o.userName}</td>
+        <td>${o.menuName}</td>
+        <td><span class="order-status ${o.status==='active'?'status-active':'status-done'}">${o.status==='active'?'✅ Активный':'✔ Завершён'}</span></td>
+        <td><strong>${o.price} ₽/день</strong></td>
+      </tr>`).join('');
+}
+
+// ─── MODALS ───
+function openModal(type) {
+  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('loginModal').classList.toggle('hidden', type !== 'login');
+  document.getElementById('registerModal').classList.toggle('hidden', type !== 'register');
+  clearAlerts();
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  clearAlerts();
+}
+function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+function clearAlerts() {
+  document.querySelectorAll('.alert').forEach(a => { a.classList.add('hidden'); a.textContent = ''; });
+}
+function showAlert(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.classList.remove('hidden');
+}
+
+// ─── NOTIFICATIONS ───
+function showNotification(msg) {
+  const el = document.getElementById('notification');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ─── ENTER KEY ───
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Enter') {
+    if (!document.getElementById('loginModal').classList.contains('hidden')) login();
+    if (!document.getElementById('registerModal').classList.contains('hidden')) register();
+  }
+});
+
+init();
+</script>
+</body>
+</html>
