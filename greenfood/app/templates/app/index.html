@@ -1,0 +1,340 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenFood — Здоровое питание</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'app/css/site.css' %}">
+</head>
+<body>
+    <header>
+  <div class="logo" onclick="showPage('home')">Green<span>Food</span></div>
+  <nav id="mainNav">
+    <a onclick="showPage('home')" id="nav-home" class="active">Главная</a>
+    <a onclick="showPage('menu')" id="nav-menu">Меню</a>
+    <a onclick="showPage('about')" id="nav-about">О компании</a>
+    <a onclick="showPage('orders')" id="nav-orders" class="hidden">Мои заказы</a>
+    <a onclick="showPage('dashboard')" id="nav-dash" class="hidden">Кабинет</a>
+    <a onclick="showPage('admin')" id="nav-admin" class="hidden" style="color: var(--gold);">⚡ Админ</a>
+  </nav>
+  <div class="nav-auth">
+    <div id="authButtons">
+      <button class="btn btn-outline btn-sm" onclick="openModal('login')">Войти</button>
+      <button class="btn btn-primary btn-sm" onclick="openModal('register')" style="margin-left:8px">Регистрация</button>
+    </div>
+    <div id="userMenu" class="hidden flex items-center gap-2">
+      <span id="headerUserName" style="color:rgba(255,255,255,0.8);font-size:0.88rem;"></span>
+      <button class="btn btn-outline btn-sm" onclick="logout()">Выйти</button>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════ PAGES ══════════════════ -->
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🥗 Доставка здорового питания</div>
+      <h1>Здоровое питание — это <em>просто</em></h1>
+      <p>Сбалансированные рационы с подсчётом калорий. Свежие ингредиенты, готовые блюда каждый день.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" style="font-size:1rem;padding:14px 36px;" onclick="showPage('menu')">Смотреть меню</button>
+        <button class="btn btn-outline" style="font-size:1rem;padding:14px 36px;" onclick="openModal('register')">Начать сейчас</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="text-center" style="max-width:500px;margin:0 auto 48px;">
+      <div class="section-title">Почему выбирают нас</div>
+      <p class="section-sub">Мы делаем здоровое питание удобным и доступным</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌿</div>
+        <h3>Свежие продукты</h3>
+        <p>Только натуральные ингредиенты без консервантов и добавок</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Быстрая доставка</h3>
+        <p>Доставим в течение 2 часов по всему городу</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧮</div>
+        <h3>Подсчёт калорий</h3>
+        <p>Каждый рацион рассчитан нашими нутрициологами</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">GreenFood</div>
+      <div class="footer-copy">© 2025 GreenFood. Все права защищены.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- MENU -->
+<div id="page-menu" class="page">
+  <div class="page-hero">
+    <h1>Наше меню</h1>
+    <p>Выберите подходящий рацион для ваших целей</p>
+  </div>
+  <div class="menu-container">
+    <div id="menuGrid" class="menu-grid"></div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">GreenFood</div>
+      <div class="footer-copy">© 2025 GreenFood</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ABOUT -->
+<div id="page-about" class="page">
+  <div class="page-hero">
+    <h1>О компании</h1>
+    <p>Наша миссия — сделать здоровое питание доступным каждому</p>
+  </div>
+  <div class="about-container">
+    <div class="about-intro">
+      <div class="about-intro-text">
+        <h2>GreenFood — больше чем доставка еды</h2>
+        <p>Мы верим, что правильное питание не должно быть скучным или сложным. С 2020 года мы помогаем людям питаться осознанно и вкусно.</p>
+        <p>Наши нутрициологи разрабатывают сбалансированные рационы, учитывая ваши цели, вкусовые предпочтения и образ жизни.</p>
+        <button class="btn btn-primary mt-4" onclick="openModal('register')">Попробовать</button>
+      </div>
+      <div class="about-visual">🌱</div>
+    </div>
+    <div class="section-title">Наши ценности</div>
+    <p class="section-sub">Принципы, которые лежат в основе нашей работы</p>
+    <div class="values-grid">
+      <div class="value-card">
+        <h3>🎯 Миссия</h3>
+        <p>Сделать здоровое питание доступным для каждого человека, вне зависимости от образа жизни.</p>
+      </div>
+      <div class="value-card">
+        <h3>✨ Качество</h3>
+        <p>Используем только свежие продукты от проверенных поставщиков. Никаких консервантов.</p>
+      </div>
+      <div class="value-card">
+        <h3>💚 Забота</h3>
+        <p>Индивидуальный подход к каждому клиенту. Ваши цели — наш приоритет.</p>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">GreenFood</div>
+      <div class="footer-copy">© 2025 GreenFood</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ORDERS (authorized) -->
+<div id="page-orders" class="page">
+  <div class="page-hero">
+    <h1>Мои заказы</h1>
+    <p>История и текущие заказы</p>
+  </div>
+  <div style="max-width:900px;margin:0 auto;padding:40px;">
+    <div id="userOrdersList"></div>
+  </div>
+  <footer><div class="footer-inner"><div class="footer-logo">GreenFood</div><div class="footer-copy">© 2025 GreenFood</div></div></footer>
+</div>
+
+<!-- DASHBOARD (authorized) -->
+<div id="page-dashboard" class="page">
+  <div class="dashboard-layout">
+    <div class="sidebar">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarAvatar">U</div>
+        <h3 id="sidebarName">Пользователь</h3>
+        <p id="sidebarEmail">email@mail.ru</p>
+        <div class="sidebar-badge" id="sidebarRole">Клиент</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a onclick="switchDashTab('profile')" id="dtab-profile" class="active"><span class="icon">👤</span>Профиль</a></li>
+        <li><a onclick="switchDashTab('myorders')" id="dtab-myorders"><span class="icon">📦</span>Мои заказы</a></li>
+        <li><a onclick="switchDashTab('subscription')" id="dtab-subscription"><span class="icon">⭐</span>Подписка</a></li>
+        <li style="margin-top:20px;"><a onclick="logout()" style="color:rgba(255,100,100,0.8)"><span class="icon">🚪</span>Выйти</a></li>
+      </ul>
+    </div>
+    <div class="dashboard-main">
+      <!-- Profile Tab -->
+      <div id="dtab-profile-content" class="tab-content active">
+        <div class="dash-header">
+          <h1 id="dashWelcome">Добро пожаловать!</h1>
+          <p>Управляйте своим профилем и заказами</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Всего заказов</div>
+            <div class="stat-value" id="statOrders">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Активная подписка</div>
+            <div class="stat-value" id="statSub">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Сохранено калорий</div>
+            <div class="stat-value">🥗</div>
+            <div class="stat-sub">Отслеживайте прогресс</div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-header"><h2>Данные профиля</h2></div>
+          <div class="profile-grid">
+            <div class="form-group">
+              <label>Имя</label>
+              <input type="text" id="profileName" placeholder="Ваше имя">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" id="profileEmail" disabled style="opacity:0.6">
+            </div>
+            <div class="form-group">
+              <label>Телефон</label>
+              <input type="text" id="profilePhone" placeholder="+7 (999) 123-45-67">
+            </div>
+            <div class="form-group">
+              <label>Адрес доставки</label>
+              <input type="text" id="profileAddress" placeholder="Улица, дом, квартира">
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm mt-4" onclick="saveProfile()">Сохранить изменения</button>
+        </div>
+      </div>
+
+      <!-- My Orders Tab -->
+      <div id="dtab-myorders-content" class="tab-content">
+        <div class="dash-header"><h1>Мои заказы</h1><p>История заказов</p></div>
+        <div class="section-card">
+          <div id="dashOrdersList"></div>
+        </div>
+      </div>
+
+      <!-- Subscription Tab -->
+      <div id="dtab-subscription-content" class="tab-content">
+        <div class="dash-header"><h1>Подписка</h1><p>Управляйте своим рационом</p></div>
+        <div class="section-card">
+          <div class="section-card-header"><h2>Текущий рацион</h2></div>
+          <div id="currentSubInfo" style="margin-bottom:24px;color:var(--text-light);">Нет активной подписки</div>
+          <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:16px;color:var(--green-deep);">Выбрать рацион из меню:</h3>
+          <div id="subMenuList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="page-admin" class="page">
+  <div class="page-hero">
+    <h1>⚡ Панель администратора</h1>
+    <p>Управление контентом сайта</p>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:40px;">
+    <div class="admin-tabs">
+      <button class="tab-btn active" onclick="switchAdminTab('menu')">🥗 Меню</button>
+      <button class="tab-btn" onclick="switchAdminTab('users')">👥 Пользователи</button>
+      <button class="tab-btn" onclick="switchAdminTab('orders')">📦 Заказы</button>
+    </div>
+
+    <!-- Menu Tab -->
+    <div id="admin-menu" class="tab-content active">
+      <div class="section-card">
+        <div class="add-form">
+          <h3>➕ Добавить позицию в меню</h3>
+          <div class="form-row">
+            <div class="form-group"><label>Название</label><input type="text" id="newMenuName" placeholder="Фитнес-рацион"></div>
+            <div class="form-group"><label>Калории</label><input type="text" id="newMenuKcal" placeholder="1200–1500 ккал"></div>
+            <div class="form-group"><label>Цена (₽/день)</label><input type="number" id="newMenuPrice" placeholder="490"></div>
+            <div class="form-group"><label>Категория</label>
+              <select id="newMenuCat">
+                <option>Похудение</option><option>Баланс</option><option>Набор массы</option>
+                <option>Вегетарианское</option><option>Детокс</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label>Описание</label><textarea id="newMenuDesc" placeholder="Краткое описание рациона..."></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label>Эмодзи (иконка)</label><input type="text" id="newMenuEmoji" placeholder="🥗" maxlength="4"></div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addMenuItem()">Добавить в меню</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Иконка</th><th>Название</th><th>Калории</th><th>Цена</th><th>Категория</th><th>Действия</th></tr>
+          </thead>
+          <tbody id="adminMenuTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Users Tab -->
+    <div id="admin-users" class="tab-content">
+      <div class="section-card">
+        <table class="data-table">
+          <thead>
+            <tr><th>ID</th><th>Имя</th><th>Email</th><th>Роль</th><th>Заказов</th><th>Действия</th></tr>
+          </thead>
+          <tbody id="adminUsersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Orders Tab -->
+    <div id="admin-orders" class="tab-content">
+      <div class="section-card">
+        <table class="data-table">
+          <thead>
+            <tr><th>Дата</th><th>Пользователь</th><th>Рацион</th><th>Статус</th><th>Сумма</th></tr>
+          </thead>
+          <tbody id="adminOrdersTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <footer><div class="footer-inner"><div class="footer-logo">GreenFood</div><div class="footer-copy">© 2025 GreenFood</div></div></footer>
+</div>
+
+<!-- ══════════════════ AUTH MODALS ══════════════════ -->
+<div id="modalOverlay" class="modal-overlay" onclick="closeModalOutside(event)">
+  <!-- LOGIN -->
+  <div id="loginModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>Добро пожаловать</h2>
+    <p class="modal-sub">Войдите в свой аккаунт GreenFood</p>
+    <div id="loginAlert" class="alert alert-error hidden"></div>
+    <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="email@mail.ru"></div>
+    <div class="form-group"><label>Пароль</label><input type="password" id="loginPass" placeholder="••••••••"></div>
+    <button class="btn btn-primary" onclick="login()">Войти</button>
+    <div class="modal-switch">Нет аккаунта? <a onclick="openModal('register')">Зарегистрироваться</a></div>
+  </div>
+  <!-- REGISTER -->
+  <div id="registerModal" class="modal hidden">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>Создать аккаунт</h2>
+    <p class="modal-sub">Присоединяйтесь к GreenFood</p>
+    <div id="regAlert" class="alert alert-error hidden"></div>
+    <div class="form-group"><label>Имя</label><input type="text" id="regName" placeholder="Иван Иванов"></div>
+    <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="email@mail.ru"></div>
+    <div class="form-group"><label>Пароль</label><input type="password" id="regPass" placeholder="Минимум 6 символов"></div>
+    <div class="form-group"><label>Повторите пароль</label><input type="password" id="regPass2" placeholder="••••••••"></div>
+    <button class="btn btn-primary" onclick="register()">Зарегистрироваться</button>
+    <div class="modal-switch">Уже есть аккаунт? <a onclick="openModal('login')">Войти</a></div>
+  </div>
+</div>
+
+<!-- Notification -->
+<div id="notification"></div>
+  <script src="{% static 'app/js/app.js' %}"></script>
+</body>
+</html>
